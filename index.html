@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Permanent+Marker" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            font-family: "Permanent Marker";
+        }
+        
+        .gallose {
+            background-color: black;
+            position: relative;
+            margin: auto;
+        }
+
+        #base {
+            height: 20px;
+            width: 230px;
+            top: 530px;
+            left: 490px;
+        }
+
+        #pole {
+            height: 400px;
+            width: 20px;
+            top: 130px;
+            left: 490px;
+        }
+
+        #topPiece {
+            height: 25px;
+            width: 232px;
+            top: -290px;
+            left: 384px;
+        }
+
+        #noose {
+            height: 40px;
+            width: 12px;
+            top: -290px;
+            left: 284px;
+        }
+
+        .man {
+            background-color: black;
+            position: relative;
+            margin: auto;
+        }
+
+        #hangMan {
+            visibility: hidden;
+        }
+
+        #head {
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            background: none;
+            border: 7px solid black;
+            position: relative;
+            top: -290px;
+            left: 901px;
+        }
+
+        .eyes {
+            border-radius: 50%;
+            height: 10px;
+            width: 10px;
+            background-color: black;
+            position: relative;
+        }
+
+        #rightEye {
+            top:-375px;
+            left: 980px;         
+        }
+
+        #leftEye {
+            top:-365px;
+            left: 930px;         
+        }
+
+        #nose {
+            top: -365px;
+            left: 956px;
+            height: 7px;
+            width: 7px;
+        }
+
+        #body {
+            height: 110px;
+            width: 13px;
+            top: -320px;
+            left: 285px;
+        }
+
+        .armLeg {
+            background-color: black;
+            position: relative;
+            height: 100px;
+            width: 12px;
+            margin-top: 1px;
+        }
+
+        #rightArm {
+            top: -430px;
+            left: 315px;
+            transform: rotate(-0.1turn);
+        }
+
+        #leftArm {
+            top: -530px;
+            left: 255px;
+            transform: rotate(0.1turn);
+        }
+
+        #leftLeg {
+            top: -645px;
+            left: 255px;
+            transform: rotate(0.1turn);
+        }
+
+        #rightLeg {
+            top: -545px;
+            left: 310px;
+            transform: rotate(-0.1turn);
+        }
+
+        #game {
+            position: relative;
+            top: -600px;
+        }
+
+        .diff {
+            position: relative;
+            top: -450px;
+            height: 50px;
+            font-size: 20px;
+            left: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .hoverEffect:hover {
+            opacity: 0.7;
+            transform: translateY(-1px);
+            color: rgb(0, 255, 0);
+            border: rgb(0, 199, 0);
+        }
+        #btn {
+            width: 60px;
+            margin: auto;
+        }
+
+        #question {
+            font-size: 50px;
+            position: relative;
+            top: -400px;
+            margin: auto;
+            left: 50px;
+        }
+
+        #keyboard {
+            display: none;
+            position: relative;
+            top: -100px;
+        }
+
+        .keys {
+            height: 50px;
+            width: 50px;
+            display: inline-block;
+            font-size: 30px;
+            position: relative;
+            top: -200px;
+            left: 50px;
+            margin: 3px;border: 5px solid black;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .keys:hover {
+            opacity: 0.7;
+            transform: translateY(-1px);
+            color: rgb(0, 255, 0);
+            border: 5px solid rgb(0, 199, 0);
+        }
+    </style>
+    <title>Hang Man</title>
+</head>
+
+<body>
+    <div id="gallose">
+        <div class="gallose" id="base"></div>
+        <div class="gallose" id="pole"></div>
+        <div class="gallose" id="topPiece"></div>
+        <div class="gallose" id="noose"></div>
+    </div>
+    <div id="hangMan">
+        <div id="head"></div>
+        <div id="leftEye" class="eyes"></div>
+        <div id="rightEye" class="eyes"></div>
+        <div id="nose" class="eyes"></div>
+        <div id="mouth"></div>
+        <div class="man" id="body"></div>
+        <div class="man armLeg" id="rightArm"></div>
+        <div class="man armLeg" id="leftArm"></div>
+        <div class="man armLeg" id="rightLeg"></div>
+        <div class="man armLeg" id="leftLeg"></div>
+    </div>
+    <div id="game">
+        <strong>
+            <label class="diff">Difficulty:</label>
+            <select class="diff hoverEffect" id="difficulty">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+        </strong>
+        <button id="btn" class="diff hoverEffect">Start</button>
+        <div id="question"></div>
+        <div id="keyboard">
+            <button class="keys" id="a">A</button>
+            <button class="keys" id="b">B</button>
+            <button class="keys" id="c">C</button>
+            <button class="keys" id="d">D</button>
+            <button class="keys" id="e">E</button>
+            <button class="keys" id="f">F</button>
+            <button class="keys" id="g">G</button>
+            <button class="keys" id="h">H</button>
+            <button class="keys" id="i">I</button>
+            <button class="keys" id="j">J</button>
+            <br>
+            <button class="keys" id="k">K</button>
+            <button class="keys" id="l">L</button>
+            <button class="keys" id="m">M</button>
+            <button class="keys" id="n">N</button>
+            <button class="keys" id="o">O</button>
+            <button class="keys" id="p">P</button>
+            <button class="keys" id="q">Q</button>
+            <button class="keys" id="r">R</button>
+            <button class="keys" id="s">S</button>
+            <button class="keys" id="t">T</button>
+            <br>
+            <button class="keys" id="u">U</button>
+            <button class="keys" id="v">V</button>
+            <button class="keys" id="w">W</button>
+            <button class="keys" id="x">X</button>
+            <button class="keys" id="y">Y</button>
+            <button class="keys" id="z">Z</button>
+        </div>
+    </div>
+</body>
+<script>
+    let easyWords = ['CHESS', 'LETTER', 'LIKE', 'SCHOOL', 'WATER', 'SWITCH', 'SNOW', 'BREAD', 'FLICK', 'WOODEN', 'TIGER'];
+    let mediumWords = ['FLOWER', 'RABBIT', 'SQUIRREL', 'WINDOW', 'BIRTHDAY', 'BACKGROUND', 'VILLAGE', 'SAVAGE', 'DATABASE', 'CHILDREN'];
+    let hardWords = ['INTERMIDIATE', 'FLAME THROWER', 'BINARY', 'FAHRENHEIT', 'CONVERTER', 'COMPILER', 'TRANSLATE', 'ELEVATOR', 'ALAGATOR', 'EGYPTIAN', 'PYRAMID', 'FOUNDATION'];
+    let randomWord;
+    const question = document.getElementById('question');
+    const btn = document.getElementById('btn');
+    const chooseDifficulty = document.getElementById('difficulty');
+    
+    function setDifficulty(difficulty) {
+        randomWord = Math.floor(Math.random() * difficulty.length);
+        question.innerHTML = '_ '.repeat(difficulty[randomWord].length);
+        document.getElementById('keyboard').style.display = 'block';
+    }
+    btn.onclick = function () {
+        if (chooseDifficulty.value == 'easy') {
+            setDifficulty(easyWords);
+        }
+        else if (chooseDifficulty.value == 'medium') {
+            setDifficulty(mediumWords);
+        }
+        else {
+            setDifficulty(hardWords);
+        }
+        btn.innerHTML = 'Stop';
+        chooseDifficulty.disabled = 'true';
+        chooseDifficulty.classList.remove('hoverEffect');
+        document.getElementById('keyboard').classList.add('up');
+        btn.onclick = () => {
+            location.reload();
+        }
+    }
+</script>
+
+</html>
