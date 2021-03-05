@@ -2,15 +2,14 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Permanent+Marker" />
     <style>
         * {
             margin: 0;
             padding: 0;
             user-select: none;
-            font-family: "Permanent Marker";
+            font-family:'Franklin Gothic Medium';
         }
-        
+
         .gallose {
             background-color: black;
             position: relative;
@@ -49,11 +48,9 @@
             background-color: black;
             position: relative;
             margin: auto;
-        }
-
-        #hangMan {
             visibility: hidden;
         }
+
 
         #head {
             height: 100px;
@@ -75,13 +72,27 @@
         }
 
         #rightEye {
-            top:-375px;
-            left: 980px;         
+            top: -375px;
+            left: 980px;
         }
 
         #leftEye {
-            top:-365px;
-            left: 930px;         
+            top: -365px;
+            left: 930px;
+        }
+
+        #mouth {
+            height: 10px;
+            width: 50px;
+            left: 935px;
+            bottom: 350px;
+        }
+
+        .curve {
+            background-color: black;
+            border-top-left-radius: 50% 50px;
+            border-top-right-radius: 50% 50px;
+            display: block;
         }
 
         #nose {
@@ -91,11 +102,16 @@
             width: 7px;
         }
 
+        .manVisibility {
+            visibility: hidden;
+        }
+
         #body {
             height: 110px;
             width: 13px;
             top: -320px;
             left: 285px;
+            transform: translateY(-13px);
         }
 
         .armLeg {
@@ -125,8 +141,8 @@
         }
 
         #rightLeg {
-            top: -545px;
-            left: 310px;
+            top: -550px;
+            left: 312px;
             transform: rotate(-0.1turn);
         }
 
@@ -141,18 +157,20 @@
             height: 50px;
             font-size: 20px;
             left: 50px;
-            cursor: pointer;
             transition: all 0.2s;
         }
+
         .hoverEffect:hover {
             opacity: 0.7;
             transform: translateY(-1px);
             color: rgb(0, 255, 0);
             border: rgb(0, 199, 0);
         }
+
         #btn {
             width: 60px;
             margin: auto;
+            cursor: pointer;
         }
 
         #question {
@@ -161,6 +179,7 @@
             top: -400px;
             margin: auto;
             left: 50px;
+            letter-spacing: 0.2em;
         }
 
         #keyboard {
@@ -177,16 +196,18 @@
             position: relative;
             top: -200px;
             left: 50px;
-            margin: 3px;border: 5px solid black;
+            margin: 3px;
+            border: 4px solid black;
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s;
         }
-        .keys:hover {
+
+        .keyhover:hover {
             opacity: 0.7;
             transform: translateY(-1px);
             color: rgb(0, 255, 0);
-            border: 5px solid rgb(0, 199, 0);
+            border: 4px solid rgb(0, 199, 0);
         }
     </style>
     <title>Hang Man</title>
@@ -200,11 +221,11 @@
         <div class="gallose" id="noose"></div>
     </div>
     <div id="hangMan">
-        <div id="head"></div>
-        <div id="leftEye" class="eyes"></div>
-        <div id="rightEye" class="eyes"></div>
-        <div id="nose" class="eyes"></div>
-        <div id="mouth"></div>
+        <div id="head" class="manVisibility"></div>
+        <div id="leftEye" class="eyes manVisibility"></div>
+        <div id="rightEye" class="eyes manVisibility"></div>
+        <div id="nose" class="eyes manVisibility"></div>
+        <div id="mouth" class="eyes manVisibility curve"></div>
         <div class="man" id="body"></div>
         <div class="man armLeg" id="rightArm"></div>
         <div class="man armLeg" id="leftArm"></div>
@@ -212,80 +233,126 @@
         <div class="man armLeg" id="leftLeg"></div>
     </div>
     <div id="game">
-        <strong>
-            <label class="diff">Difficulty:</label>
-            <select class="diff hoverEffect" id="difficulty">
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-            </select>
-        </strong>
         <button id="btn" class="diff hoverEffect">Start</button>
         <div id="question"></div>
         <div id="keyboard">
-            <button class="keys" id="a">A</button>
-            <button class="keys" id="b">B</button>
-            <button class="keys" id="c">C</button>
-            <button class="keys" id="d">D</button>
-            <button class="keys" id="e">E</button>
-            <button class="keys" id="f">F</button>
-            <button class="keys" id="g">G</button>
-            <button class="keys" id="h">H</button>
-            <button class="keys" id="i">I</button>
-            <button class="keys" id="j">J</button>
+            <button class="keys keyhover" onclick="g.check(this);">A</button>
+            <button class="keys keyhover" onclick="g.check(this);">B</button>
+            <button class="keys keyhover" onclick="g.check(this);">C</button>
+            <button class="keys keyhover" onclick="g.check(this);">D</button>
+            <button class="keys keyhover" onclick="g.check(this);">E</button>
+            <button class="keys keyhover" onclick="g.check(this);">F</button>
+            <button class="keys keyhover" onclick="g.check(this);">G</button>
+            <button class="keys keyhover" onclick="g.check(this);">H</button>
+            <button class="keys keyhover" onclick="g.check(this);">I</button>
+            <button class="keys keyhover" onclick="g.check(this);">J</button>
             <br>
-            <button class="keys" id="k">K</button>
-            <button class="keys" id="l">L</button>
-            <button class="keys" id="m">M</button>
-            <button class="keys" id="n">N</button>
-            <button class="keys" id="o">O</button>
-            <button class="keys" id="p">P</button>
-            <button class="keys" id="q">Q</button>
-            <button class="keys" id="r">R</button>
-            <button class="keys" id="s">S</button>
-            <button class="keys" id="t">T</button>
+            <button class="keys keyhover" onclick="g.check(this);">K</button>
+            <button class="keys keyhover" onclick="g.check(this);">L</button>
+            <button class="keys keyhover" onclick="g.check(this);">M</button>
+            <button class="keys keyhover" onclick="g.check(this);">N</button>
+            <button class="keys keyhover" onclick="g.check(this);">O</button>
+            <button class="keys keyhover" onclick="g.check(this);">P</button>
+            <button class="keys keyhover" onclick="g.check(this);">Q</button>
+            <button class="keys keyhover" onclick="g.check(this);">R</button>
+            <button class="keys keyhover" onclick="g.check(this);">S</button>
+            <button class="keys keyhover" onclick="g.check(this);">T</button>
             <br>
-            <button class="keys" id="u">U</button>
-            <button class="keys" id="v">V</button>
-            <button class="keys" id="w">W</button>
-            <button class="keys" id="x">X</button>
-            <button class="keys" id="y">Y</button>
-            <button class="keys" id="z">Z</button>
+            <button class="keys keyhover" onclick="g.check(this);">U</button>
+            <button class="keys keyhover" onclick="g.check(this);">V</button>
+            <button class="keys keyhover" onclick="g.check(this);">W</button>
+            <button class="keys keyhover" onclick="g.check(this);">X</button>
+            <button class="keys keyhover" onclick="g.check(this);">Y</button>
+            <button class="keys keyhover" onclick="g.check(this);">Z</button>
         </div>
     </div>
 </body>
 <script>
-    let easyWords = ['CHESS', 'LETTER', 'LIKE', 'SCHOOL', 'WATER', 'SWITCH', 'SNOW', 'BREAD', 'FLICK', 'WOODEN', 'TIGER'];
-    let mediumWords = ['FLOWER', 'RABBIT', 'SQUIRREL', 'WINDOW', 'BIRTHDAY', 'BACKGROUND', 'VILLAGE', 'SAVAGE', 'DATABASE', 'CHILDREN'];
-    let hardWords = ['INTERMIDIATE', 'FLAME THROWER', 'BINARY', 'FAHRENHEIT', 'CONVERTER', 'COMPILER', 'TRANSLATE', 'ELEVATOR', 'ALAGATOR', 'EGYPTIAN', 'PYRAMID', 'FOUNDATION'];
-    let randomWord;
-    const question = document.getElementById('question');
-    const btn = document.getElementById('btn');
-    const chooseDifficulty = document.getElementById('difficulty');
-    
-    function setDifficulty(difficulty) {
-        randomWord = Math.floor(Math.random() * difficulty.length);
-        question.innerHTML = '_ '.repeat(difficulty[randomWord].length);
-        document.getElementById('keyboard').style.display = 'block';
-    }
-    btn.onclick = function () {
-        if (chooseDifficulty.value == 'easy') {
-            setDifficulty(easyWords);
-        }
-        else if (chooseDifficulty.value == 'medium') {
-            setDifficulty(mediumWords);
-        }
-        else {
-            setDifficulty(hardWords);
-        }
-        btn.innerHTML = 'Stop';
-        chooseDifficulty.disabled = 'true';
-        chooseDifficulty.classList.remove('hoverEffect');
-        document.getElementById('keyboard').classList.add('up');
-        btn.onclick = () => {
-            location.reload();
+    const words = ['FLOWER', 'RABBIT', 'SQUIRREL', 'WINDOW', 'BIRTHDAY', 'BACKGROUND', 'VILLAGE', 'SAVAGE', 'DATABASE', 'CHILDREN'];
+    let _randomWord = new WeakMap();
+    let timesWrong = 0;
+    let timesRight = 0;
+    let gameDifficulty;
+    class Man {
+        showBodyPart(part) {
+            document.getElementById(part).style.visibility = 'visible';
         }
     }
+    const m = new Man;
+
+    class Game {
+        constructor() {
+            _randomWord.set(this, words[Math.floor(Math.random() * words.length)]);
+            this.masked = _randomWord.get(this).replace(/./g, '_');
+        }
+
+        start() {
+            const randomWord = _randomWord.get(this);
+            const btn = document.getElementById('btn');
+            const chooseDifficulty = document.getElementById('difficulty');
+            document.getElementById('question').innerHTML = this.masked;
+
+            btn.innerHTML = 'Stop';
+            btn.onclick = () => { location.reload(); };
+            document.getElementById('keyboard').style.display = 'block';
+            chooseDifficulty.disabled = 'true';
+            chooseDifficulty.classList.remove('hoverEffect');
+            // console.log(randomWord);
+        }
+
+        check(key) {
+            const randomWord = _randomWord.get(this);
+            // console.log(randomWord);
+            const letter = key.innerHTML;
+            key.classList.add('used');
+            key.classList.remove('keyhover');
+            key.disabled = 'true';
+            key.style.cursor = 'not-allowed';
+            key.style.border = 'none';
+
+            if (randomWord.search(letter) == -1) {
+                timesWrong++;
+                if (timesWrong === 1)
+                    m.showBodyPart('head');
+                else if (timesWrong === 2)
+                    m.showBodyPart('body');
+                else if (timesWrong === 3)
+                    m.showBodyPart('rightArm');
+                else if (timesWrong === 4)
+                    m.showBodyPart('leftArm');
+                else if (timesWrong === 5)
+                    m.showBodyPart('rightLeg');
+                else if (timesWrong === 6)
+                    m.showBodyPart('leftLeg');
+                else if (timesWrong === 7)
+                    m.showBodyPart('rightEye');
+                else if (timesWrong == 8)
+                    m.showBodyPart('leftEye');
+                else if (timesWrong == 9)
+                    m.showBodyPart('nose');
+                else if (timesWrong == 10)
+                    m.showBodyPart('mouth');
+                else {
+                    alert(`You Lost.  The word was "${randomWord}"`);
+                    location.reload();
+                }
+            }
+            for (let i = 0; i < randomWord.length; i++) {
+                if (letter == randomWord.charAt(i)) {
+                    this.masked = this.masked.substring(0, i) + letter + this.masked.substring(i + 1);
+                    document.getElementById('question').innerHTML = this.masked;
+                    setTimeout(() => {
+                        timesRight++;
+                        if (timesRight == randomWord.length)
+                            if (confirm('You Won! Play again?'))
+                                location.reload();
+                    }, 500);
+                }
+            }
+        }
+    }
+    const g = new Game(words);
+    document.getElementById('btn').onclick = () => { g.start(); };
 </script>
 
 </html>
