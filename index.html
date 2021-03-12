@@ -7,7 +7,7 @@
             margin: 0;
             padding: 0;
             user-select: none;
-            font-family:'Franklin Gothic Medium';
+            font-family: 'Franklin Gothic Medium';
         }
 
         .gallose {
@@ -43,6 +43,13 @@
             top: -290px;
             left: 284px;
         }
+        #slant {
+            height: 20px;
+            width: 200px;
+            transform: rotate(45deg);
+            left: 420px;
+            top: -287px;
+        }
 
         .man {
             background-color: black;
@@ -59,7 +66,7 @@
             background: none;
             border: 7px solid black;
             position: relative;
-            top: -290px;
+            top: -315px;
             left: 901px;
         }
 
@@ -72,12 +79,12 @@
         }
 
         #rightEye {
-            top: -375px;
+            top: -405px;
             left: 980px;
         }
 
         #leftEye {
-            top: -365px;
+            top: -395px;
             left: 930px;
         }
 
@@ -85,7 +92,7 @@
             height: 10px;
             width: 50px;
             left: 935px;
-            bottom: 350px;
+            bottom: 375px;
         }
 
         .curve {
@@ -96,7 +103,7 @@
         }
 
         #nose {
-            top: -365px;
+            top: -385px;
             left: 956px;
             height: 7px;
             width: 7px;
@@ -109,7 +116,7 @@
         #body {
             height: 110px;
             width: 13px;
-            top: -320px;
+            top: -340px;
             left: 285px;
             transform: translateY(-13px);
         }
@@ -123,25 +130,25 @@
         }
 
         #rightArm {
-            top: -430px;
+            top: -450px;
             left: 315px;
             transform: rotate(-0.1turn);
         }
 
         #leftArm {
-            top: -530px;
+            top: -550px;
             left: 255px;
             transform: rotate(0.1turn);
         }
 
         #leftLeg {
-            top: -645px;
+            top: -665px;
             left: 255px;
             transform: rotate(0.1turn);
         }
 
         #rightLeg {
-            top: -550px;
+            top: -570px;
             left: 312px;
             transform: rotate(-0.1turn);
         }
@@ -158,19 +165,28 @@
             font-size: 20px;
             left: 50px;
             transition: all 0.2s;
+            display: inline-block;
         }
 
         .hoverEffect:hover {
             opacity: 0.7;
             transform: translateY(-1px);
             color: rgb(0, 255, 0);
-            border: rgb(0, 199, 0);
+            border: 1px rgb(0, 199, 0);
         }
 
         #btn {
             width: 60px;
             margin: auto;
             cursor: pointer;
+        }
+
+        #hint {
+            width: 60px;
+            cursor: pointer;
+            position: absolute;
+            top: -457px;
+            left: 150px;
         }
 
         #question {
@@ -219,6 +235,7 @@
         <div class="gallose" id="pole"></div>
         <div class="gallose" id="topPiece"></div>
         <div class="gallose" id="noose"></div>
+        <div class="gallose" id="slant"></div>
     </div>
     <div id="hangMan">
         <div id="head" class="manVisibility"></div>
@@ -236,43 +253,49 @@
         <button id="btn" class="diff hoverEffect">Start</button>
         <div id="question"></div>
         <div id="keyboard">
-            <button class="keys keyhover" onclick="g.check(this);">A</button>
-            <button class="keys keyhover" onclick="g.check(this);">B</button>
-            <button class="keys keyhover" onclick="g.check(this);">C</button>
-            <button class="keys keyhover" onclick="g.check(this);">D</button>
-            <button class="keys keyhover" onclick="g.check(this);">E</button>
-            <button class="keys keyhover" onclick="g.check(this);">F</button>
-            <button class="keys keyhover" onclick="g.check(this);">G</button>
-            <button class="keys keyhover" onclick="g.check(this);">H</button>
-            <button class="keys keyhover" onclick="g.check(this);">I</button>
-            <button class="keys keyhover" onclick="g.check(this);">J</button>
+            <button id="a" class="keys keyhover" onclick="g.check(this);">A</button>
+            <button id="b" class="keys keyhover" onclick="g.check(this);">B</button>
+            <button id="c" class="keys keyhover" onclick="g.check(this);">C</button>
+            <button id="d" class="keys keyhover" onclick="g.check(this);">D</button>
+            <button id="e" class="keys keyhover" onclick="g.check(this);">E</button>
+            <button id="f" class="keys keyhover" onclick="g.check(this);">F</button>
+            <button id="g" class="keys keyhover" onclick="g.check(this);">G</button>
+            <button id="h" class="keys keyhover" onclick="g.check(this);">H</button>
+            <button id="i" class="keys keyhover" onclick="g.check(this);">I</button>
+            <button id="j" class="keys keyhover" onclick="g.check(this);">J</button>
             <br>
-            <button class="keys keyhover" onclick="g.check(this);">K</button>
-            <button class="keys keyhover" onclick="g.check(this);">L</button>
-            <button class="keys keyhover" onclick="g.check(this);">M</button>
-            <button class="keys keyhover" onclick="g.check(this);">N</button>
-            <button class="keys keyhover" onclick="g.check(this);">O</button>
-            <button class="keys keyhover" onclick="g.check(this);">P</button>
-            <button class="keys keyhover" onclick="g.check(this);">Q</button>
-            <button class="keys keyhover" onclick="g.check(this);">R</button>
-            <button class="keys keyhover" onclick="g.check(this);">S</button>
-            <button class="keys keyhover" onclick="g.check(this);">T</button>
+            <button id="k" class="keys keyhover" onclick="g.check(this);">K</button>
+            <button id="l" class="keys keyhover" onclick="g.check(this);">L</button>
+            <button id="m" class="keys keyhover" onclick="g.check(this);">M</button>
+            <button id="n" class="keys keyhover" onclick="g.check(this);">N</button>
+            <button id="o" class="keys keyhover" onclick="g.check(this);">O</button>
+            <button id="p" class="keys keyhover" onclick="g.check(this);">P</button>
+            <button id="q" class="keys keyhover" onclick="g.check(this);">Q</button>
+            <button id="r" class="keys keyhover" onclick="g.check(this);">R</button>
+            <button id="s" class="keys keyhover" onclick="g.check(this);">S</button>
+            <button id="t" class="keys keyhover" onclick="g.check(this);">T</button>
             <br>
-            <button class="keys keyhover" onclick="g.check(this);">U</button>
-            <button class="keys keyhover" onclick="g.check(this);">V</button>
-            <button class="keys keyhover" onclick="g.check(this);">W</button>
-            <button class="keys keyhover" onclick="g.check(this);">X</button>
-            <button class="keys keyhover" onclick="g.check(this);">Y</button>
-            <button class="keys keyhover" onclick="g.check(this);">Z</button>
+            <button id="u" class="keys keyhover" onclick="g.check(this);">U</button>
+            <button id="v" class="keys keyhover" onclick="g.check(this);">V</button>
+            <button id="w" class="keys keyhover" onclick="g.check(this);">W</button>
+            <button id="x" class="keys keyhover" onclick="g.check(this);">X</button>
+            <button id="y" class="keys keyhover" onclick="g.check(this);">Y</button>
+            <button id="z" class="keys keyhover" onclick="g.check(this);">Z</button>
+            <button id="hint" class="diff hoverEffect" onclick="g.showHint();">Hint</button>
         </div>
     </div>
 </body>
 <script>
-    const words = ['FLOWER', 'RABBIT', 'SQUIRREL', 'WINDOW', 'BIRTHDAY', 'BACKGROUND', 'VILLAGE', 'SAVAGE', 'DATABASE', 'CHILDREN'];
+    const words = [
+        { hint: 'Animal', value: ['MOUSE', 'DOLPHIN', 'ELEPHANT', 'KOALA', 'GIRAFFE', 'RHINOCEROS'] },
+        { hint: 'Street', value: ['TRAFFIC', 'MAIL BOX', 'LAMPPOST', 'STREET SIGN', 'BLOCK', 'CROSSWALK'] },
+        { hint: 'Coding Languages', value: ['HTML', 'JAVASCRIPT', 'PYTHON', 'BINARY', 'C-SHARP', 'JAVA'] },
+    ];
     let _randomWord = new WeakMap();
+    let _randomHint = new WeakMap();
     let timesWrong = 0;
-    let timesRight = 0;
     let gameDifficulty;
+
     class Man {
         showBodyPart(part) {
             document.getElementById(part).style.visibility = 'visible';
@@ -282,8 +305,9 @@
 
     class Game {
         constructor() {
-            _randomWord.set(this, words[Math.floor(Math.random() * words.length)]);
-            this.masked = _randomWord.get(this).replace(/./g, '_');
+            _randomHint.set(this, words[Math.floor(Math.random() * words.length)])
+            _randomWord.set(this, _randomHint.get(this).value[Math.floor(Math.random() * 6)]);
+            this.masked = _randomWord.get(this).replace(/[a-z]/ig, '_');
         }
 
         start() {
@@ -295,14 +319,16 @@
             btn.innerHTML = 'Stop';
             btn.onclick = () => { location.reload(); };
             document.getElementById('keyboard').style.display = 'block';
-            chooseDifficulty.disabled = 'true';
-            chooseDifficulty.classList.remove('hoverEffect');
-            // console.log(randomWord);
+
+            console.log(randomWord);
+        }
+
+        showHint() {
+            alert(`Your Hint is "${_randomHint.get(this).hint}"! Good Luck!`);
         }
 
         check(key) {
             const randomWord = _randomWord.get(this);
-            // console.log(randomWord);
             const letter = key.innerHTML;
             key.classList.add('used');
             key.classList.remove('keyhover');
@@ -342,17 +368,22 @@
                     this.masked = this.masked.substring(0, i) + letter + this.masked.substring(i + 1);
                     document.getElementById('question').innerHTML = this.masked;
                     setTimeout(() => {
-                        timesRight++;
-                        if (timesRight == randomWord.length)
+                        if (this.masked.search('_') == -1)
                             if (confirm('You Won! Play again?'))
                                 location.reload();
-                    }, 500);
+                    }, 50);
                 }
             }
         }
     }
-    const g = new Game(words);
+    const g = new Game;
+
     document.getElementById('btn').onclick = () => { g.start(); };
+
+    document.addEventListener('keydown', event => {
+        console.log(event.key);
+        document.getElementById(event.key).click();
+    });
 </script>
 
 </html>
