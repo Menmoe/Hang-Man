@@ -10,6 +10,10 @@
             font-family: 'Franklin Gothic Medium';
         }
 
+        #gallose, #hangMan {
+            margin-left: 557px;
+        }
+
         .gallose {
             background-color: black;
             position: relative;
@@ -67,7 +71,7 @@
             border: 7px solid black;
             position: relative;
             top: -315px;
-            left: 901px;
+            left: 345px;
         }
 
         .eyes {
@@ -80,18 +84,18 @@
 
         #rightEye {
             top: -405px;
-            left: 980px;
+            left: 424px;
         }
 
         #leftEye {
             top: -395px;
-            left: 930px;
+            left: 375px;
         }
 
         #mouth {
             height: 10px;
             width: 50px;
-            left: 935px;
+            left: 380px;
             bottom: 375px;
         }
 
@@ -104,7 +108,7 @@
 
         #nose {
             top: -385px;
-            left: 956px;
+            left: 400px;
             height: 7px;
             width: 7px;
         }
@@ -185,8 +189,9 @@
             width: 60px;
             cursor: pointer;
             position: absolute;
-            top: -457px;
+            top: -450px;
             left: 150px;
+            visibility: hidden;
         }
 
         #question {
@@ -199,9 +204,10 @@
         }
 
         #keyboard {
-            display: none;
+            visibility: hidden;
             position: relative;
             top: -100px;
+            width: 650px;
         }
 
         .keys {
@@ -229,7 +235,7 @@
     <title>Hang Man</title>
 </head>
 
-<body>
+<body style="position: fixed;">
     <div id="gallose">
         <div class="gallose" id="base"></div>
         <div class="gallose" id="pole"></div>
@@ -251,80 +257,58 @@
     </div>
     <div id="game">
         <button id="btn" class="diff hoverEffect">Start</button>
+        <button id="hint" class="diff hoverEffect" onclick="g.showHint();">Hint</button>
         <div id="question"></div>
         <div id="keyboard">
-            <button id="a" class="keys keyhover" onclick="g.check(this);">A</button>
-            <button id="b" class="keys keyhover" onclick="g.check(this);">B</button>
-            <button id="c" class="keys keyhover" onclick="g.check(this);">C</button>
-            <button id="d" class="keys keyhover" onclick="g.check(this);">D</button>
-            <button id="e" class="keys keyhover" onclick="g.check(this);">E</button>
-            <button id="f" class="keys keyhover" onclick="g.check(this);">F</button>
-            <button id="g" class="keys keyhover" onclick="g.check(this);">G</button>
-            <button id="h" class="keys keyhover" onclick="g.check(this);">H</button>
-            <button id="i" class="keys keyhover" onclick="g.check(this);">I</button>
-            <button id="j" class="keys keyhover" onclick="g.check(this);">J</button>
-            <br>
-            <button id="k" class="keys keyhover" onclick="g.check(this);">K</button>
-            <button id="l" class="keys keyhover" onclick="g.check(this);">L</button>
-            <button id="m" class="keys keyhover" onclick="g.check(this);">M</button>
-            <button id="n" class="keys keyhover" onclick="g.check(this);">N</button>
-            <button id="o" class="keys keyhover" onclick="g.check(this);">O</button>
-            <button id="p" class="keys keyhover" onclick="g.check(this);">P</button>
-            <button id="q" class="keys keyhover" onclick="g.check(this);">Q</button>
-            <button id="r" class="keys keyhover" onclick="g.check(this);">R</button>
-            <button id="s" class="keys keyhover" onclick="g.check(this);">S</button>
-            <button id="t" class="keys keyhover" onclick="g.check(this);">T</button>
-            <br>
-            <button id="u" class="keys keyhover" onclick="g.check(this);">U</button>
-            <button id="v" class="keys keyhover" onclick="g.check(this);">V</button>
-            <button id="w" class="keys keyhover" onclick="g.check(this);">W</button>
-            <button id="x" class="keys keyhover" onclick="g.check(this);">X</button>
-            <button id="y" class="keys keyhover" onclick="g.check(this);">Y</button>
-            <button id="z" class="keys keyhover" onclick="g.check(this);">Z</button>
-            <button id="hint" class="diff hoverEffect" onclick="g.showHint();">Hint</button>
         </div>
     </div>
 </body>
 <script>
+    const abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let html = '';
+    abc.split('').forEach(letter => {
+        html+=`<button id="${letter}" class="keys keyhover" onclick="g.check(this);">${letter}</button>`;
+    });
+    document.getElementById('keyboard').innerHTML = html;
+
     const words = [
         { hint: 'Animal', value: ['MOUSE', 'DOLPHIN', 'ELEPHANT', 'KOALA', 'GIRAFFE', 'RHINOCEROS'] },
         { hint: 'Street', value: ['TRAFFIC', 'MAIL BOX', 'LAMPPOST', 'STREET SIGN', 'BLOCK', 'CROSSWALK'] },
         { hint: 'Coding Languages', value: ['HTML', 'JAVASCRIPT', 'PYTHON', 'BINARY', 'C-SHARP', 'JAVA'] },
     ];
-    let _randomWord = new WeakMap();
-    let _randomHint = new WeakMap();
+    const _randomWord = new WeakMap();
+    const _randomHint = new WeakMap();
     let timesWrong = 0;
-    let gameDifficulty;
+    let started = false;
 
-    class Man {
-        showBodyPart(part) {
+        function showBodyPart(part) {
             document.getElementById(part).style.visibility = 'visible';
         }
-    }
-    const m = new Man;
 
     class Game {
         constructor() {
-            _randomHint.set(this, words[Math.floor(Math.random() * words.length)])
-            _randomWord.set(this, _randomHint.get(this).value[Math.floor(Math.random() * 6)]);
+            _randomHint.set(this, Math.floor(Math.random() * words.length))
+            _randomWord.set(this, words[_randomHint.get(this)].value[Math.floor(Math.random() * words[_randomHint.get(this)].value.length)]);
             this.masked = _randomWord.get(this).replace(/[a-z]/ig, '_');
         }
 
         start() {
+            started = true;
             const randomWord = _randomWord.get(this);
             const btn = document.getElementById('btn');
             const chooseDifficulty = document.getElementById('difficulty');
             document.getElementById('question').innerHTML = this.masked;
 
             btn.innerHTML = 'Stop';
-            btn.onclick = () => { location.reload(); };
-            document.getElementById('keyboard').style.display = 'block';
-
+            btn.onclick = () => location.reload();
+            document.getElementById('keyboard').style.visibility = 'visible';
+            document.getElementById('hint').style.visibility = 'visible';
+            
             console.log(randomWord);
         }
 
         showHint() {
-            alert(`Your Hint is "${_randomHint.get(this).hint}"! Good Luck!`);
+            alert(`Your Hint is "${words[_randomHint.get(this)].hint}"! Good Luck!`);
         }
 
         check(key) {
@@ -336,31 +320,32 @@
             key.style.cursor = 'not-allowed';
             key.style.border = 'none';
 
-            if (randomWord.search(letter) == -1) {
+            if (!randomWord.match(letter)) {
                 timesWrong++;
                 if (timesWrong === 1)
-                    m.showBodyPart('head');
+                    showBodyPart('head');
                 else if (timesWrong === 2)
-                    m.showBodyPart('body');
+                    showBodyPart('body');
                 else if (timesWrong === 3)
-                    m.showBodyPart('rightArm');
+                    showBodyPart('rightArm');
                 else if (timesWrong === 4)
-                    m.showBodyPart('leftArm');
+                    showBodyPart('leftArm');
                 else if (timesWrong === 5)
-                    m.showBodyPart('rightLeg');
+                    showBodyPart('rightLeg');
                 else if (timesWrong === 6)
-                    m.showBodyPart('leftLeg');
+                    showBodyPart('leftLeg');
                 else if (timesWrong === 7)
-                    m.showBodyPart('rightEye');
+                    showBodyPart('rightEye');
                 else if (timesWrong == 8)
-                    m.showBodyPart('leftEye');
+                    showBodyPart('leftEye');
                 else if (timesWrong == 9)
-                    m.showBodyPart('nose');
-                else if (timesWrong == 10)
-                    m.showBodyPart('mouth');
+                    showBodyPart('nose');
                 else {
-                    alert(`You Lost.  The word was "${randomWord}"`);
-                    location.reload();
+                    showBodyPart('mouth');
+                    setTimeout(() => {
+                        alert(`You Lost.  The word was "${randomWord}"`);
+                        location.reload();
+                    }, 10);
                 }
             }
             for (let i = 0; i < randomWord.length; i++) {
@@ -368,10 +353,10 @@
                     this.masked = this.masked.substring(0, i) + letter + this.masked.substring(i + 1);
                     document.getElementById('question').innerHTML = this.masked;
                     setTimeout(() => {
-                        if (this.masked.search('_') == -1)
+                        if (!this.masked.match('_'))
                             if (confirm('You Won! Play again?'))
                                 location.reload();
-                    }, 50);
+                    }, 10);
                 }
             }
         }
@@ -381,8 +366,8 @@
     document.getElementById('btn').onclick = () => { g.start(); };
 
     document.addEventListener('keydown', event => {
-        console.log(event.key);
-        document.getElementById(event.key).click();
+        if(started && abc.includes(event.key.toUpperCase()))
+            document.getElementById(event.key.toUpperCase()).click();
     });
 </script>
 
